@@ -184,7 +184,7 @@ def verify_token(token):
         return None
 
 # retrieve a single event record by EID
-@app.get('/events/eid/<int:eid>')
+@app.get('/patients/eid/<int:eid>')
 @app.output(EventOutSchema)
 @app.auth_required(auth)
 def get_event_eid(eid):

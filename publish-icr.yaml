@@ -13,8 +13,8 @@ jobs:
     name: Build and push image to registry
     runs-on: ubuntu-latest
     env:
-      ICR_NAMESPACE: solution-tutorials
-      ICR_REPOSITORY: tutorial-slack-chatbot-database
+      ICR_NAMESPACE: solution-tutorialstriage
+      ICR_REPOSITORY: tutorial-slack-chatbot-databasetriage
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2

@@ -52,12 +52,12 @@ app.config['SERVERS'] = [
         {
             "appname":
             {
-                "default": "slackbottriage-backend",
+                "default": "myapp",
                 "description": "application name"
             },
             "projectid":
             {
-                "default": "1mqn6ctvxequ",
+                "default": "projectid",
                 "description": "the Code Engine project ID"
             },
             "region":

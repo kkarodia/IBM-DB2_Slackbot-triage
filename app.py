@@ -34,7 +34,7 @@ API_TOKEN="{{'{0}':'appuser'}}".format(os.getenv('API_TOKEN'))
 tokens=ast.literal_eval(API_TOKEN)
 
 # database URI
-DB2_URI=os.getenv('DB2triage_URI')
+DB2_URI=os.getenv('DB2_URI')
 # optional table arguments, e.g., to set another table schema
 ENV_TABLE_ARGS=os.getenv('TABLE_ARGS')
 TABLE_ARGS=None

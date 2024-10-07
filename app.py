@@ -134,7 +134,7 @@ class EventModel(db.Model):
     cellnum = db.Column('CELLNUM',db.String(10))
     email = db.Column('EMAIL',db.String(32))
     gender = db.Column('GENDER',db.String(32))
-    homeaddress = db.Column('HOMEADDRESS',db.String(32700))
+    homeaddress = db.Column('HOMEADDRESS',db.String(1000))
     painscale = db.Column('PAINSCALE',db.Integer)
     painnature = db.Column('PAINNATURE',db.String(32))
     immediate = db.Column('IMMEDIATE',db.Boolean)

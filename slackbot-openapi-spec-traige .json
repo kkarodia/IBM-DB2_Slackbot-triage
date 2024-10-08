@@ -528,7 +528,7 @@
           },
         "existingconditions" :{
             "type": "string"
-          },
+          }
       },
       "EventsOut": {
         "type": "object",
@@ -639,6 +639,9 @@
           },
         "functionalhistory" :{
             "type": "string"
+          },
+           "existingconditions" :{
+            "type": "string"
           }
         },
         "required": [
@@ -666,7 +669,8 @@
           "urinationissues" ,
           "changesvision" ,
           "skinabnormalities" ,
-          "functionalhistory"
+          "functionalhistory",
+          "existingconditions"
         ]
       }
     },

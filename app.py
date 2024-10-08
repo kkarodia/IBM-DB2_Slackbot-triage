@@ -185,8 +185,8 @@ class EventModel(db.Model):
     urinationissues = db.Column('urinationissues',db.Boolean)
     changesvision = db.Column('changesvision',db.Boolean)
     skinabnormalities = db.Column('skinabnormalities',db.Boolean)
-    functionalhistory=db.Column('functionalhistory',db.String(500)
-    existingconditions=db.Column('existingconditions',db.String(100)
+    functionalhistory=db.Column('functionalhistory',db.String(500))
+    existingconditions=db.Column('existingconditions',db.String(100))
     
 
 # the Python output for Events

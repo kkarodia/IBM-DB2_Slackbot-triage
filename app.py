@@ -96,7 +96,6 @@ db = SQLAlchemy(app)
 sample_patients=[
     {
         "fname":"Patrick",
-        "lname": "Dlamini",
         "identity":"0105232541085",
         "cellnum":"0609805147",
         "email": "johndoe@gmail.com",
@@ -127,7 +126,6 @@ sample_patients=[
     },
     {
         "fname":"Patience",
-        "lname": "Dlamini",
         "identity":"0105237771085",
         "cellnum":"0506587417",
         "email": "janedoe@gmail.com",
@@ -165,7 +163,6 @@ class EventModel(db.Model):
     __table_args__ = TABLE_ARGS
     eid = db.Column('eid',db.Integer, primary_key=True)
     fname = db.Column('fname',db.String(32))
-    lname = db.Column('lname',db.String(32))
     identity = db.Column('identity',db.String(13))
     cellnum = db.Column('cellnum',db.String(10))
     email = db.Column('email',db.String(32))
@@ -196,7 +193,6 @@ class EventModel(db.Model):
 class EventOutSchema(Schema):
     eid = Integer()
     fname = String()
-    lname = String()
     identity = String()
     cellnum = String()
     email =String()
@@ -225,7 +221,6 @@ class EventOutSchema(Schema):
 # the Python input for Events
 class EventInSchema(Schema):
     fname = String(required=True)
-    lname = String(required=True)
     identity = String(required=True, validate=Length(13))
     cellnum = String(required=True, validate=Length(10))
     email =String(required=True)

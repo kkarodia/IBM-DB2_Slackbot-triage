@@ -95,28 +95,62 @@ db = SQLAlchemy(app)
 # sample records to be inserted after table recreation
 sample_patients=[
     {
-        "FNAME":"Patrick",
-        "LNAME": "Dlamini",
-        "IDENTITY":"0105232541085",
-        "CELLNUM":"0609805147",
-        "EMAIL": "johndoe@gmail.com",
-        "GENDER":"Male",
-        "HOMEADDRESS":"90 pain rd, durban",
-        "PAINSCALE":"9",
-        "PAINNATURE":"Pain in the abdomen",
-        "IMMEDIATE":"true",
+        "fname":"Patrick",
+        "lname": "Dlamini",
+        "identity":"0105232541085",
+        "cellnum":"0609805147",
+        "email": "johndoe@gmail.com",
+        "gender":"Male",
+        "homeaddress":"90 pain rd, durban",
+        "painscale":"9",
+        "painnature":"Pain in the abdomen",
+        "immediate":"true",
+        "trauma" :"none" ,
+        "surgeries" :"none",
+        "fever": "false",
+        "weightchange": "false",
+        "breathing":"false",
+        "coughing" :"false",
+        "descough" :"none",
+        "chestpain" :"false",
+        "nausea" :"false",
+        "vomiting" :"false",
+        "diarrhea" :"false",
+        "urinationissues" :"false",
+        "changesvision" :"false",
+        "skinabnormalities" :"false",
+        "functionalhistory":"smoker,drugs",
+
+
+
     },
     {
-        "FNAME":"Patience",
-        "LNAME": "Dlamini",
-        "IDENTITY":"0105237771085",
-        "CELLNUM":"0506587417",
-        "EMAIL": "janedoe@gmail.com",
-        "GENDER":"Female",
-        "HOMEADDRESS":"10 injury rd, durban",
-        "PAINSCALE":"2",
-        "PAINNATURE":"Cough",
-        "IMMEDIATE":"false",
+        "fname":"Patience",
+        "lname": "Dlamini",
+        "identity":"0105237771085",
+        "cellnum":"0506587417",
+        "email": "janedoe@gmail.com",
+        "gender":"Female",
+        "homeaddress":"10 injury rd, durban",
+        "painscale":"2",
+        "painnature":"Cough",
+        "immediate":"false",
+        "trauma" :"none" ,
+        "surgeries" :"none",
+        "fever": "false",
+        "weightchange": "false",
+        "breathing":"false",
+        "coughing" :"false",
+        "descough" :"none",
+        "chestpain" :"false",
+        "nausea" :"false",
+        "vomiting" :"false",
+        "diarrhea" :"false",
+        "urinationissues" :"false",
+        "changesvision" :"false",
+        "skinabnormalities" :"false",
+        "functionalhistory":"smoker",
+
     },
 
 ]
@@ -127,17 +161,33 @@ sample_patients=[
 class EventModel(db.Model):
     __tablename__ = 'PATIENTS'
     __table_args__ = TABLE_ARGS
-    eid = db.Column('EID',db.Integer, primary_key=True)
-    fname = db.Column('FNAME',db.String(32))
-    lname = db.Column('LNAME',db.String(32))
-    identity = db.Column('IDENTITY',db.String(13))
-    cellnum = db.Column('CELLNUM',db.String(10))
-    email = db.Column('EMAIL',db.String(32))
-    gender = db.Column('GENDER',db.String(32))
-    homeaddress = db.Column('HOMEADDRESS',db.String(1000))
-    painscale = db.Column('PAINSCALE',db.Integer)
-    painnature = db.Column('PAINNATURE',db.String(32))
-    immediate = db.Column('IMMEDIATE',db.Boolean)
+    eid = db.Column('eid',db.Integer, primary_key=True)
+    fname = db.Column('fname',db.String(32))
+    lname = db.Column('lname',db.String(32))
+    identity = db.Column('identity',db.String(13))
+    cellnum = db.Column('cellnum',db.String(10))
+    email = db.Column('email',db.String(32))
+    gender = db.Column('gender',db.String(32))
+    homeaddress = db.Column('homeaddress',db.String(1000))
+    painscale = db.Column('painscale',db.Integer)
+    painnature = db.Column('painnature',db.String(32))
+    immediate = db.Column('immediate',db.Boolean)
+    trauma = db.Column('trauma',db.String(50))
+    surgeries = db.Column('surgeries',db.String(50))
+    fever = db.Column('fever ',db.Boolean)
+    weightchange = db.Column('weightchange',db.Boolean)
+    breathing = db.Column('breathing',db.Boolean)
+    coughing = db.Column('coughing',db.Boolean)
+    descough = db.Column('descough',db.String(32))
+    chestpain = db.Column('chestpain',db.Boolean)
+    nausea = db.Column('nausea',db.Boolean)
+    vomiting = db.Column('vomiting',db.Boolean)
+    diarrhea = db.Column('diarrhea',db.Boolean)
+    urinationissues = db.Column('urinationissues',db.Boolean)
+    changesvision = db.Column('changesvision',db.Boolean)
+    skinabnormalities = db.Column('skinabnormalities',db.Boolean)
+    functionalhistory=db.Column('functionalhistory',db.String(500)
+    
 
 # the Python output for Events
 class EventOutSchema(Schema):
@@ -152,6 +202,21 @@ class EventOutSchema(Schema):
     painscale = Integer()
     painnature = String()
     immediate = Boolean()
+    trauma = String()
+    surgeries = String()
+    fever = Boolean()
+    weightchange = Boolean()
+    breathing = Boolean()
+    coughing = Boolean()
+    descough = String()
+    chestpain = Boolean()
+    nausea = Boolean()
+    vomiting = Boolean()
+    diarrhea = Boolean()
+    urinationissues = Boolean()
+    changesvision = Boolean()
+    skinabnormalities = Boolean()
+    functionalhistory=String()
 
 # the Python input for Events
 class EventInSchema(Schema):
@@ -165,6 +230,21 @@ class EventInSchema(Schema):
     painscale = Integer(required=True)
     painnature = String(required=True)
     immediate = Boolean(required=True)
+    trauma = String(required=True)
+    surgeries = String(required=True)
+    fever = Boolean(required=True)
+    weightchange = Boolean(required=True)
+    breathing = Boolean(required=True)
+    coughing = Boolean(required=True)
+    descough = String(required=True)
+    chestpain = Boolean(required=True)
+    nausea = Boolean(required=True)
+    vomiting = Boolean(required=True)
+    diarrhea = Boolean(required=True)
+    urinationissues = Boolean(required=True)
+    changesvision = Boolean(required=True)
+    skinabnormalities = Boolean(required=True)
+    functionalhistory=String(required=True)
 
 # use with pagination
 class EventQuerySchema(Schema):

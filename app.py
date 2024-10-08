@@ -120,6 +120,7 @@ sample_patients=[
         "changesvision" :"false",
         "skinabnormalities" :"false",
         "functionalhistory":"smoker,drugs",
+        "allergies":"penicilin",
 
 
 
@@ -150,6 +151,7 @@ sample_patients=[
         "changesvision" :"false",
         "skinabnormalities" :"false",
         "functionalhistory":"smoker",
+        "allergies":"penicilin",
 
     },
 
@@ -187,6 +189,7 @@ class EventModel(db.Model):
     changesvision = db.Column('changesvision',db.Boolean)
     skinabnormalities = db.Column('skinabnormalities',db.Boolean)
     functionalhistory=db.Column('functionalhistory',db.String(500)
+    allergies=db.Column('allergies',db.String(50)
     
 
 # the Python output for Events
@@ -217,6 +220,7 @@ class EventOutSchema(Schema):
     changesvision = Boolean()
     skinabnormalities = Boolean()
     functionalhistory=String()
+    allergies=String()
 
 # the Python input for Events
 class EventInSchema(Schema):
@@ -245,6 +249,7 @@ class EventInSchema(Schema):
     changesvision = Boolean(required=True)
     skinabnormalities = Boolean(required=True)
     functionalhistory=String(required=True)
+    allergies=String(required=True)
 
 # use with pagination
 class EventQuerySchema(Schema):

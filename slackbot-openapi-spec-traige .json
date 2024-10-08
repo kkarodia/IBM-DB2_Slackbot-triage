@@ -480,8 +480,52 @@
           },
           "eid": {
             "type": "integer"
-          }
-        }
+          },
+          "trauma" : {
+            "type": "string"
+          },
+        "surgeries" :{
+            "type": "string"
+          },
+        "fever":{
+            "type": "boolean"
+          } ,
+        "weightchange": {
+            "type": "boolean"
+          },
+        "breathing":{
+            "type": "boolean"
+          },
+        "coughing" :{
+            "type": "boolean"
+          },
+        "descough" :{
+            "type": "string"
+          },
+        "chestpain" :{
+            "type": "boolean"
+          },
+        "nausea" :{
+            "type": "boolean"
+          },
+        "vomiting" :{
+            "type": "boolean"
+          },
+        "diarrhea" :{
+            "type": "boolean"
+          },
+        "urinationissues" :{
+            "type": "boolean"
+          },
+        "changesvision" :{
+            "type": "boolean"
+          },
+        "skinabnormalities" :{
+            "type": "string"
+          },
+        "functionalhistory" :{
+            "type": "string"
+          },
       },
       "EventsOut": {
         "type": "object",
@@ -547,6 +591,51 @@
           },
           "immediate": {
             "type": "boolean"
+          },
+          "trauma" : {
+            "type": "string"
+          },
+        "surgeries" :{
+            "type": "string"
+          },
+        "fever":{
+            "type": "boolean"
+          } ,
+        "weightchange": {
+            "type": "boolean"
+          },
+        "breathing":{
+            "type": "boolean"
+          },
+        "coughing" :{
+            "type": "boolean"
+          },
+        "descough" :{
+            "type": "string"
+          },
+        "chestpain" :{
+            "type": "boolean"
+          },
+        "nausea" :{
+            "type": "boolean"
+          },
+        "vomiting" :{
+            "type": "boolean"
+          },
+        "diarrhea" :{
+            "type": "boolean"
+          },
+        "urinationissues" :{
+            "type": "boolean"
+          },
+        "changesvision" :{
+            "type": "boolean"
+          },
+        "skinabnormalities" :{
+            "type": "string"
+          },
+        "functionalhistory" :{
+            "type": "string"
           }
         },
         "required": [
@@ -559,7 +648,22 @@
           "painscale",
           "painnature",
           "gender",
-          "immediate"
+          "immediate",
+          "trauma" ,
+          "surgeries",
+          "fever",
+          "weightchange",
+          "breathing",
+          "coughing",
+          "descough" ,
+          "chestpain",
+          "nausea" ,
+          "vomiting" ,
+          "diarrhea" ,
+          "urinationissues" ,
+          "changesvision" ,
+          "skinabnormalities" ,
+          "functionalhistory"
         ]
       }
     },

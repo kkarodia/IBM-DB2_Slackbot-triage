@@ -118,8 +118,8 @@ sample_patients=[
 ]
 
 
-# Schema for table "EVENTS"
-# Set default schema to "EVENTS"
+# Schema for table "PATIENTS"
+# Set default schema to "PATIENTS"
 class EventModel(db.Model):
     __tablename__ = 'PATIENTS'
     __table_args__ = TABLE_ARGS
@@ -158,7 +158,7 @@ class EventQuerySchema(Schema):
     per_page = Integer(load_default=20, validate=Range(max=30))
 
 class EventsOutSchema(Schema):
-    events = List(Nested(EventOutSchema))
+    patients = List(Nested(EventOutSchema))
     pagination = Nested(PaginationSchema)
 
 # register a callback to verify the token

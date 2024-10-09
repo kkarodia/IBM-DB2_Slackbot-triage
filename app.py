@@ -100,26 +100,7 @@ sample_patients=[
         "cellnum":"0609805147",
         "email": "johndoe@gmail.com",
         "gender":"Male",
-        "homeaddress":"90 pain rd, durban",
-        "painscale":"9",
-        "painnature":"Pain in the abdomen",
-        "immediate":"true",
-        "trauma" :"none" ,
-        "surgeries" :"none",
-        "fever": "false",
-        "weightchange": "false",
-        "breathing":"false",
-        "coughing" :"false",
-        "descough" :"none",
-        "chestpain" :"false",
-        "nausea" :"false",
-        "vomiting" :"false",
-        "diarrhea" :"false",
-        "urinationissues" :"false",
-        "changesvision" :"false",
-        "skinabnormalities" :"false",
-        "functionalhistory":"smoker,drugs",
-        "existingconditions":"penicilin",
+        "homeaddress":"90 pain rd, durban"
 
 
 
@@ -131,25 +112,6 @@ sample_patients=[
         "email": "janedoe@gmail.com",
         "gender":"Female",
         "homeaddress":"10 injury rd, durban",
-        "painscale":"2",
-        "painnature":"Cough",
-        "immediate":"false",
-        "trauma" :"none" ,
-        "surgeries" :"none",
-        "fever": "false",
-        "weightchange": "false",
-        "breathing":"false",
-        "coughing" :"false",
-        "descough" :"none",
-        "chestpain" :"false",
-        "nausea" :"false",
-        "vomiting" :"false",
-        "diarrhea" :"false",
-        "urinationissues" :"false",
-        "changesvision" :"false",
-        "skinabnormalities" :"false",
-        "functionalhistory":"smoker",
-        "existingconditions":"penicilin",
 
     },
 
@@ -161,32 +123,13 @@ sample_patients=[
 class EventModel(db.Model):
     __tablename__ = 'PATIENTS'
     __table_args__ = TABLE_ARGS
-    eid = db.Column('eid',db.Integer, primary_key=True)
-    fname = db.Column('fname',db.String(32))
-    identity = db.Column('identity',db.String(13))
-    cellnum = db.Column('cellnum',db.String(10))
-    email = db.Column('email',db.String(32))
-    gender = db.Column('gender',db.String(32))
-    homeaddress = db.Column('homeaddress',db.String(1000))
-    painscale = db.Column('painscale',db.Integer)
-    painnature = db.Column('painnature',db.String(32))
-    immediate = db.Column('immediate',db.Boolean)
-    trauma = db.Column('trauma',db.String(50))
-    surgeries = db.Column('surgeries',db.String(50))
-    fever = db.Column('fever ',db.Boolean)
-    weightchange = db.Column('weightchange',db.Boolean)
-    breathing = db.Column('breathing',db.Boolean)
-    coughing = db.Column('coughing',db.Boolean)
-    descough = db.Column('descough',db.String(32))
-    chestpain = db.Column('chestpain',db.Boolean)
-    nausea = db.Column('nausea',db.Boolean)
-    vomiting = db.Column('vomiting',db.Boolean)
-    diarrhea = db.Column('diarrhea',db.Boolean)
-    urinationissues = db.Column('urinationissues',db.Boolean)
-    changesvision = db.Column('changesvision',db.Boolean)
-    skinabnormalities = db.Column('skinabnormalities',db.Boolean)
-    functionalhistory=db.Column('functionalhistory',db.String(500))
-    existingconditions=db.Column('existingconditions',db.String(100))
+    eid = db.Column('EID',db.Integer, primary_key=True)
+    fname = db.Column('FNAME',db.String(32))
+    identity = db.Column('IDENTITY',db.String(13))
+    cellnum = db.Column('CELLNUM',db.String(10))
+    email = db.Column('EMAIL',db.String(32))
+    gender = db.Column('GENDER',db.String(32))
+    homeaddress = db.Column('HOMEADDRESS',db.String(1000))
     
 
 # the Python output for Events
@@ -198,25 +141,7 @@ class EventOutSchema(Schema):
     email =String()
     gender = String()
     homeaddress = String()
-    painscale = Integer()
-    painnature = String()
-    immediate = Boolean()
-    trauma = String()
-    surgeries = String()
-    fever = Boolean()
-    weightchange = Boolean()
-    breathing = Boolean()
-    coughing = Boolean()
-    descough = String()
-    chestpain = Boolean()
-    nausea = Boolean()
-    vomiting = Boolean()
-    diarrhea = Boolean()
-    urinationissues = Boolean()
-    changesvision = Boolean()
-    skinabnormalities = Boolean()
-    functionalhistory=String()
-    existingconditions=String()
+   
 
 # the Python input for Events
 class EventInSchema(Schema):
@@ -226,26 +151,7 @@ class EventInSchema(Schema):
     email =String(required=True)
     gender = String(required=True)
     homeaddress = String(required=True)
-    painscale = Integer(required=True)
-    painnature = String(required=True)
-    immediate = Boolean(required=True)
-    trauma = String(required=True)
-    surgeries = String(required=True)
-    fever = Boolean(required=True)
-    weightchange = Boolean(required=True)
-    breathing = Boolean(required=True)
-    coughing = Boolean(required=True)
-    descough = String(required=True)
-    chestpain = Boolean(required=True)
-    nausea = Boolean(required=True)
-    vomiting = Boolean(required=True)
-    diarrhea = Boolean(required=True)
-    urinationissues = Boolean(required=True)
-    changesvision = Boolean(required=True)
-    skinabnormalities = Boolean(required=True)
-    functionalhistory=String(required=True)
-    existingconditions=String(required=True)
-
+    
 # use with pagination
 class EventQuerySchema(Schema):
     page = Integer(load_default=1)

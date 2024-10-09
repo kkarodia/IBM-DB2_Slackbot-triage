@@ -190,7 +190,19 @@ def get_event_name(fname):
     search="%{}%".format(fname)
     return EventModel.query.filter(EventModel.fname.like(search)).first()
 
-
+# delete a record
+@app.delete('/patients/eid/<int:eid>')
+@app.output({}, 204)
+@app.auth_required(auth)
+def delete_event(eid):
+    """Delete an event record by EID
+    Delete a single event record identified by its EID.
+    """
+    event = EventModel.query.get_or_404(eid)
+    db.session.delete(event)
+    db.session.commit()
+    return ''
+    
 # get all events
 @app.get('/patients')
 @app.input(EventQuerySchema, 'query')

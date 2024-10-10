@@ -184,11 +184,39 @@ def get_event_eid(eid):
 @app.output(EventOutSchema)
 @app.auth_required(auth)
 def get_event_name(fname):
-    """Event record by name
-    Retrieve a single event record by its short name
+    """record by name
+    Retrieve a singlerecord by its name
     """
     search="%{}%".format(fname)
     return EventModel.query.filter(EventModel.fname.like(search)).first()
+
+#retrive records with same gender 
+@app.get('/patients/gender/<string:gender>')
+@app.input(EventQuerySchema, 'query')
+@app.output(EventsOutSchema)
+@app.auth_required(auth)
+def get_patients_by_gender(query, gender):
+    """
+    Retrieve all records of the same gender
+    """
+    per_page = query.get('per_page', 20)
+    page = query.get('page', 1)
+
+    if per_page > 30:
+        abort(400, description="'per_page' cannot exceed 30")
+
+    try:
+        pagination = EventModel.query.filter_by(gender=gender).paginate(
+            page=page,
+            per_page=per_page
+        )
+    except Exception as e:
+        abort(400, description=str(e))
+
+    return {
+        'patients': pagination.items,
+        'pagination': pagination_builder(pagination)
+    }
 
 # delete a record
 @app.delete('/patients/eid/<int:eid>')

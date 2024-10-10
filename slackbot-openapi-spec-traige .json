@@ -10,11 +10,11 @@
       "url": "https://{appname}.{projectid}.{region}.codeengine.appdomain.cloud",
       "variables": {
         "appname": {
-          "default": "slackbottriage-backend",
+          "default": "slackbot-backend",
           "description": "application name"
         },
         "projectid": {
-          "default": "1mqn6ctvxequ",
+          "default": "projectid",
           "description": "the Code Engine project ID"
         },
         "region": {
@@ -58,12 +58,12 @@
           {
             "in": "query",
             "name": "per_page",
-            "required": false,
             "schema": {
               "type": "integer",
               "default": 20,
               "maximum": 30
-            }
+            },
+            "required": true
           },
           {
             "in": "query",
@@ -160,6 +160,79 @@
             }
           }
         },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/patients/gender/{gender}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "per_page",
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "maximum": 30
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+          "in": "path",
+                  "name": "gender",
+                  "schema": {
+                    "type": "string"
+                  },
+            "required": true
+          }
+
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EventsOut"
+                }
+              }
+            },
+            "description": "Successful response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            },
+            "description": "Validation error"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPError"
+                }
+              }
+            },
+            "description": "Authentication error"
+          }
+        },
+        "summary": "records by gender",
+        "description": "Retrieve all records of the same gender",
         "security": [
           {
             "ApiKeyAuth": []
@@ -361,7 +434,7 @@
           }
         },
         "summary": "Event record by name",
-        "description": "Retrieve a single event record by its short name",
+        "description": "Retrieve a single record by its name",
         "security": [
           {
             "ApiKeyAuth": []
@@ -451,9 +524,6 @@
           "fname": {
             "type": "string"
           },
-          "lname": {
-            "type": "string"
-          },
           "identity": {
             "type": "string"
           },
@@ -466,69 +536,10 @@
           "homeaddress": {
             "type": "string"
           },
-          "painscale": {
-            "type": "integer"
-          },
-          "painnature": {
-            "type": "string"
-          },
           "gender": {
             "type": "string"
-          },
-          "immediate": {
-            "type": "boolean"
-          },
-          "eid": {
-            "type": "integer"
-          },
-          "trauma" : {
-            "type": "string"
-          },
-        "surgeries" :{
-            "type": "string"
-          },
-        "fever":{
-            "type": "boolean"
-          } ,
-        "weightchange": {
-            "type": "boolean"
-          },
-        "breathing":{
-            "type": "boolean"
-          },
-        "coughing" :{
-            "type": "boolean"
-          },
-        "descough" :{
-            "type": "string"
-          },
-        "chestpain" :{
-            "type": "boolean"
-          },
-        "nausea" :{
-            "type": "boolean"
-          },
-        "vomiting" :{
-            "type": "boolean"
-          },
-        "diarrhea" :{
-            "type": "boolean"
-          },
-        "urinationissues" :{
-            "type": "boolean"
-          },
-        "changesvision" :{
-            "type": "boolean"
-          },
-        "skinabnormalities" :{
-            "type": "string"
-          },
-        "functionalhistory" :{
-            "type": "string"
-          },
-        "existingconditions" :{
-            "type": "string"
           }
+        }
       },
       "EventsOut": {
         "type": "object",
@@ -552,7 +563,38 @@
             "minLength": 1,
             "maxLength": 32
           },
-          "lname": {
+          "identity": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 13
+          },
+          "cellnum": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 10
+          },
+          "email": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32
+          },
+          "homeaddress": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "gender": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 10
+          }
+        }
+        
+      },
+      "EventsIn": {
+        "type": "object",
+        "properties": {
+          "fname": {
             "type": "string",
             "minLength": 1,
             "maxLength": 32
@@ -575,102 +617,21 @@
           "homeaddress": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 32700
-          },
-          "painscale": {
-            "type": "integer",
-            "minLength": 0,
-            "maxLength": 2
-          },
-          "painnature": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 32
+            "maxLength": 1000
           },
           "gender": {
             "type": "string",
             "minLength": 1,
-            "maxLength": 32
-          },
-          "immediate": {
-            "type": "boolean"
-          },
-          "trauma" : {
-            "type": "string"
-          },
-        "surgeries" :{
-            "type": "string"
-          },
-        "fever":{
-            "type": "boolean"
-          } ,
-        "weightchange": {
-            "type": "boolean"
-          },
-        "breathing":{
-            "type": "boolean"
-          },
-        "coughing" :{
-            "type": "boolean"
-          },
-        "descough" :{
-            "type": "string"
-          },
-        "chestpain" :{
-            "type": "boolean"
-          },
-        "nausea" :{
-            "type": "boolean"
-          },
-        "vomiting" :{
-            "type": "boolean"
-          },
-        "diarrhea" :{
-            "type": "boolean"
-          },
-        "urinationissues" :{
-            "type": "boolean"
-          },
-        "changesvision" :{
-            "type": "boolean"
-          },
-        "skinabnormalities" :{
-            "type": "string"
-          },
-        "functionalhistory" :{
-            "type": "string"
-          },
-           "existingconditions" :{
-            "type": "string"
+            "maxLength": 10
           }
         },
         "required": [
           "fname",
-          "lname",
           "identity",
           "cellnum",
           "email",
           "homeaddress",
-          "painscale",
-          "painnature",
-          "gender",
-          "immediate",
-          "trauma" ,
-          "surgeries",
-          "fever",
-          "weightchange",
-          "breathing",
-          "coughing",
-          "descough" ,
-          "chestpain",
-          "nausea" ,
-          "vomiting" ,
-          "diarrhea" ,
-          "urinationissues" ,
-          "changesvision" ,
-          "skinabnormalities" ,
-          "functionalhistory",
-          "existingconditions"
+          "gender"
         ]
       }
     },
@@ -681,5 +642,6 @@
         "in": "header"
       }
     }
+  
   }
 }

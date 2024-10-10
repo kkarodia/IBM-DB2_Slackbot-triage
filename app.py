@@ -200,8 +200,9 @@ def get_patients_by_gender(query, tgender):
     Retrieve all records of the same gender
     """
     try:
-        per_page = getattr(query, 'per_page', 20)
-        page = getattr(query, 'page', 1)
+         # Get pagination parameters
+        per_page = request.args.get('per_page', 15, type=int)
+        page = request.args.get('page', 1, type=int)
 
         if per_page > 30:
             abort(400, description="'per_page' cannot exceed 30")
@@ -209,7 +210,7 @@ def get_patients_by_gender(query, tgender):
         patients_query = EventModel.query.filter_by(gender=tgender)
         
         if patients_query.count() == 0:
-            return {'patients': [], 'pagination': {'total': 0, 'pages': 0, 'page': page, 'per_page': per_page}}
+            return make_response(jsonify({"error": "No records found"}), 404)
 
         pagination = patients_query.paginate(page=page, per_page=per_page)
 

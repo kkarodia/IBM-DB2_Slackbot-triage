@@ -1,13 +1,10 @@
 # Custom extension for IBM Watson Assistant which provides a
-# REST API around a single database table (EVENTS).
+# REST API around a single database table 
 #
 # The code demonstrates how a simple REST API can be developed and
 # then deployed as serverless app to IBM Cloud Code Engine.
 #
-# See the README and related tutorial for details.
-#
-# Written by Henrik Loeser (data-henrik), hloeser@de.ibm.com
-# (C) 2022 by IBM
+
 
 import os
 import ast

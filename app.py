@@ -190,10 +190,7 @@ def get_event_name(fname):
     return EventModel.query.filter(EventModel.fname.like(search)).first()
 
 #retrive records with same gender 
-@app.get('/patients/gender/<string:tgender>')
-@app.input(EventQuerySchema, 'query')
-@app.output(EventsOutSchema)
-@app.auth_required(auth)
+@app.route("/patients/gender/<tgender>", methods=["GET"])
 def get_patients_by_gender(tgender):
     try:
         # Get pagination parameters
@@ -222,6 +219,7 @@ def get_patients_by_gender(tgender):
         # Handle any other exceptions
         error_message = f"An error occurred: {str(e)}"
         return make_response(jsonify({"error": error_message}), 500)
+
 
 # delete a record
 @app.delete('/patients/eid/<int:eid>')

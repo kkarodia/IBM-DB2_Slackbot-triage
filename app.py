@@ -191,32 +191,35 @@ def get_event_name(fname):
     return EventModel.query.filter(EventModel.fname.like(search)).first()
 
 #retrive records with same gender 
-@app.get('/patients/gender/<string:gender>')
+@app.get('/patients/gender/<string:tgender>')
 @app.input(EventQuerySchema, 'query')
 @app.output(EventsOutSchema)
 @app.auth_required(auth)
-def get_patients_by_gender(query, gender):
+def get_patients_by_gender(query, tgender):
     """
     Retrieve all records of the same gender
     """
-    per_page = query.get('per_page', 20)
-    page = query.get('page', 1)
-
-    if per_page > 30:
-        abort(400, description="'per_page' cannot exceed 30")
-
     try:
-        pagination = EventModel.query.filter_by(gender=gender).paginate(
-            page=page,
-            per_page=per_page
-        )
-    except Exception as e:
-        abort(400, description=str(e))
+        per_page = getattr(query, 'per_page', 20)
+        page = getattr(query, 'page', 1)
 
-    return {
-        'patients': pagination.items,
-        'pagination': pagination_builder(pagination)
-    }
+        if per_page > 30:
+            abort(400, description="'per_page' cannot exceed 30")
+
+        patients_query = EventModel.query.filter_by(gender=tgender)
+        
+        if patients_query.count() == 0:
+            return {'patients': [], 'pagination': {'total': 0, 'pages': 0, 'page': page, 'per_page': per_page}}
+
+        pagination = patients_query.paginate(page=page, per_page=per_page)
+
+        return {
+            'patients': pagination.items,
+            'pagination': pagination_builder(pagination)
+        }
+    except Exception as e:
+        app.logger.error(f"Error in get_patients_by_gender: {str(e)}")
+        abort(500, description=f"An error occurred: {str(e)}")
 
 # delete a record
 @app.delete('/patients/eid/<int:eid>')

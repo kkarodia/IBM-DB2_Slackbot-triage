@@ -218,8 +218,9 @@ def get_patients_by_gender(query, tgender):
             'pagination': pagination_builder(pagination)
         }
     except Exception as e:
-        app.logger.error(f"Error in get_patients_by_gender: {str(e)}")
-        abort(500, description=f"An error occurred: {str(e)}")
+        error_message = f"An error occurred: {str(e)}"
+        response = make_response(jsonify({"error": error_message}), 500)
+        return response
 
 # delete a record
 @app.delete('/patients/eid/<int:eid>')

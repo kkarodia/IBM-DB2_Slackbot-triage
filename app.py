@@ -197,33 +197,34 @@ def get_event_name(fname):
 @app.input(EventQuerySchema, 'query')
 @app.output(EventsOutSchema)
 @app.auth_required(auth)
-def get_patients_by_gender(query, tgender):
-    """
-    Retrieve all records of the same gender
-    """
+def get_patients_by_gender(tgender):
     try:
-         # Get pagination parameters
+        # Get pagination parameters
         per_page = request.args.get('per_page', 15, type=int)
         page = request.args.get('page', 1, type=int)
 
-        if per_page > 30:
-            abort(400, description="'per_page' cannot exceed 30")
+        # Query to filter patients by gender
+        patients_query = db.session.query(Patient).filter_by(gender=tgender)
 
-        patients_query = EventModel.query.filter_by(gender=tgender)
-        
-        if patients_query.count() == 0:
+        # Apply pagination after filtering by gender
+        paginated_patients = patients_query.paginate(page=page, per_page=per_page, error_out=False)
+
+        # If no patients are found
+        if not paginated_patients.items:
             return make_response(jsonify({"error": "No records found"}), 404)
 
-        pagination = patients_query.paginate(page=page, per_page=per_page)
+        # Return the paginated patients as JSON
+        return jsonify([patient.to_dict() for patient in paginated_patients.items])
 
-        return {
-            'patients': pagination.items,
-            'pagination': pagination_builder(pagination)
-        }
+    except SQLAlchemyError as e:
+        # Catch any SQLAlchemy-specific errors
+        error_message = f"Database error: {str(e)}"
+        return make_response(jsonify({"error": error_message}), 500)
+
     except Exception as e:
+        # Handle any other exceptions
         error_message = f"An error occurred: {str(e)}"
-        response = make_response(jsonify({"error": error_message}), 500)
-        return response
+        return make_response(jsonify({"error": error_message}), 500)
 
 # delete a record
 @app.delete('/patients/eid/<int:eid>')

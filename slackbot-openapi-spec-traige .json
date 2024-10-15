@@ -167,7 +167,7 @@
         ]
       }
     },
-    "/patients/gender/{gender}": {
+    "/patients/gender/{tgender}": {
       "get": {
         "parameters": [
           {
@@ -191,7 +191,7 @@
           },
           {
           "in": "path",
-                  "name": "gender",
+                  "name": "tgender",
                   "schema": {
                     "type": "string"
                   },

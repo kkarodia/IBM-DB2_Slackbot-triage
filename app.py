@@ -190,35 +190,22 @@ def get_event_name(fname):
     return EventModel.query.filter(EventModel.fname.like(search)).first()
 
 #retrive records with same gender 
-@app.route("/patients/gender/<tgender>", methods=["GET"])
-def get_patients_by_gender(tgender):
-    try:
-        # Get pagination parameters
-        per_page = request.args.get('per_page', 15, type=int)
-        page = request.args.get('page', 1, type=int)
-
-        # Query to filter patients by gender
-        patients_query = db.session.query(Patient).filter_by(gender=tgender)
-
-        # Apply pagination after filtering by gender
-        paginated_patients = patients_query.paginate(page=page, per_page=per_page, error_out=False)
-
-        # If no patients are found
-        if not paginated_patients.items:
-            return make_response(jsonify({"error": "No records found"}), 404)
-
-        # Return the paginated patients as JSON
-        return jsonify([patient.to_dict() for patient in paginated_patients.items])
-
-    except SQLAlchemyError as e:
-        # Catch any SQLAlchemy-specific errors
-        error_message = f"Database error: {str(e)}"
-        return make_response(jsonify({"error": error_message}), 500)
-
-    except Exception as e:
-        # Handle any other exceptions
-        error_message = f"An error occurred: {str(e)}"
-        return make_response(jsonify({"error": error_message}), 500)
+@app.get('/patients/gender/<string:tgender>')
+@app.input(EventQuerySchema, 'query')
+@app.output(EventsOutSchema)
+@app.auth_required(auth)
+def get_patients_by_gender(tgender, query):
+    """Get patients by gender
+    Retrieve all patient records with the specified gender
+    """
+    pagination = EventModel.query.filter(EventModel.gender == tgender).paginate(
+        page=query['page'],
+        per_page=query['per_page']
+    )
+    return {
+        'patients': pagination.items,
+        'pagination': pagination_builder(pagination)
+    }
 
 
 # delete a record

@@ -14,8 +14,9 @@ from apiflask.fields import Integer, String, Boolean, Date, List, Nested
 from apiflask.validators import Length, Range
 # Database access using SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
-from flask import jsonify, make_response, request
+from flask import jsonify, make_response, request,url_for
 from sqlalchemy.exc import SQLAlchemyError
+
 
 # Set how this API should be titled and the current version
 API_TITLE='Events API for Watson Assistant'
@@ -202,9 +203,22 @@ def get_patients_by_gender(tgender, query):
         page=query['page'],
         per_page=query['per_page']
     )
+    
+    def get_page_url(page):
+        return url_for('get_patients_by_gender', tgender=tgender, page=page, per_page=query['per_page'], _external=True)
+    
     return {
         'patients': pagination.items,
-        'pagination': pagination_builder(pagination)
+        'pagination': {
+            'page': pagination.page,
+            'per_page': pagination.per_page,
+            'total': pagination.total,
+            'pages': pagination.pages,
+            'next': get_page_url(pagination.next_num) if pagination.has_next else None,
+            'prev': get_page_url(pagination.prev_num) if pagination.has_prev else None,
+            'first': get_page_url(1),
+            'last': get_page_url(pagination.pages),
+        }
     }
 
 
